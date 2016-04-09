@@ -24,7 +24,7 @@ How to view HTML code:
 '''
 
 # read the HTML code from a web page and save as a string
-with open('data/Shawshank.html', 'rU') as f:
+with open('data/example.html', 'rU') as f:
     html = f.read()
 
 # convert HTML into a structured Soup object
@@ -96,11 +96,17 @@ b.find(name='p', attrs={'id':'feedback'})
 b.find_all(name='p')[0]['id']
 
 # print the text of all four resources displayed on the webpage
-TODO
+import re
+res=b.find_all(text=re.compile(r'\bresource\b'))
+for x in res:
+   print x.parent.text 
 
-# print the text of only the API resources
-TODO
 
+# print the text of all four API resources displayed on the webpage
+res=b.find_all(text=re.compile(r'\bAPI resource\b'))
+for x in res:
+   print x.parent.text 
+   
 '''
 Scraping the IMDb website
 '''
@@ -119,7 +125,7 @@ print b
 import codecs
 # write text from b.  Encode the text as 'utf8'
 # writing with the default of ASCII causes a write failure due to utf8 characters in b
-f = codecs.open(r'/Users/jim_byers/Documents/GA/GA_Data_Science_course/SEA-DAT1/data/Shawshank.html', "w", 'utf-8')
+f = codecs.open(r'data/Shawshank.html', "w", 'utf-8')
 f.write (b.prettify()) 
 f.close()
 
@@ -136,24 +142,26 @@ b.find(name='h1').find(name='span', attrs={'class':'itemprop', 'itemprop':'name'
 #AttributeError: 'NoneType' object has no attribute 'text' 
 
 
-
-
 # get the star rating (as a float)
 float(b.find(name='span', attrs={'itemprop':'ratingValue'}).text)
 float(b.find(name='div', attrs={'class':'titlePageSprite star-box-giga-star'}).text)
+
+
 '''
 EXERCISE TWO
 '''
 
 # get the description
-b.find(name='span', attrs={'itemprop':'reviewbody'}).text
+#b.find(name='span', attrs={'itemprop':'reviewbody'}).text
 
+b.findAll("div", { "class" : "summary_text" })
 
 # get the content rating
 b.find(name='span', attrs={'itemprop':'ratingValue'}).text 
 
 
 # get the duration in minutes (as an integer)
+print b.find(name='time', attrs={'itemprop': 'duration'}).text 
 
 
 

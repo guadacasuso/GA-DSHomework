@@ -16,6 +16,7 @@ path= "data/chipotle.tsv"
 applicationsFile= open(path)
 
 applicationsFileReader = csv.reader(applicationsFile)
+
 applicationsData= list(applicationsFileReader)
 
 #Understanding the Data 
